@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0a;
+  --foreground: #ededed;
 }
 
 @theme inline {
@@ -12,16 +12,12 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-
+    --background: #ffffff;
+    --foreground: #171717;
   }
-
 }
-
-
 
 body {
   background: var(--background);
@@ -30,11 +26,42 @@ body {
 }
 
 h2 {
-  @apply text-2xl font-semibold mb-4;
+  @apply text-2xl font-semibold mb-4 text-white;
 }
 h1 {
-  @apply text-3xl font-semibold mb-6;
+  @apply text-3xl font-semibold mb-6 text-white;
 }
 p {
-  @apply text-base mb-4;
+  @apply text-base mb-4 text-gray-200;
+}
+
+input,
+textarea,
+select {
+  background-color: #23272e;
+  color: #ededed;
+  border: 1px solid #444950;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px #2563eb33;
+}
+
+label {
+  color: #ededed;
+}
+
+button {
+  background-color: #2563eb;
+  color: #fff;
+  border: none;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background-color: #1d4ed8;
 }
