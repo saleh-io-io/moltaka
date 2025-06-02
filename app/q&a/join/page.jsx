@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 export default function JoinPage() {
     const [code, setCode] = useState('');
     const [error, setError] = useState('');
+
+    const [name, setName] = useState('');
     const router = useRouter();
 
     const handleChange = (e) => {
@@ -19,14 +21,33 @@ export default function JoinPage() {
             setError('Please enter a 9-digit code.');
             return;
         }
-        router.push('/q&a');
+        // Pass name and code as query parameters
+        router.push(`/q&a?name=${encodeURIComponent(name)}&code=${encodeURIComponent(code)}`);
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-900">
+        <div className="min-h-screen flex items-center justify-center bg-gray-900 relative">
+            {/* Back Button outside the container */}
+            <button
+                className="absolute top-8 left-8 bg-gray-700 text-white px-4 py-2 rounded shadow hover:bg-gray-600 z-10"
+                onClick={() => router.push('/')}
+            >
+                ← Back
+            </button>
             <div className="w-full max-w-md bg-gray-800 rounded-lg shadow-md p-8">
                 <h2 className="text-2xl font-bold mb-6 text-gray-900 text-center">Enter 9-Digit Code</h2>
                 <form onSubmit={handleSubmit}>
+                    <input
+                        type="text"
+                        placeholder="Enter your username"
+                        className="w-full px-4 py-3 text-lg border border-gray-300 rounded mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        value={name}
+                        onChange={e => {
+                            setName(e.target.value);
+                            setError('');
+                        }}
+                        required
+                    />
                     <input
                         type="text"
                         value={code}

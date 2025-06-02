@@ -10,11 +10,18 @@ export default function NewEventPage() {
     const handleSubmit = (e) => {
         e.preventDefault();
         // You can handle the name value here if needed
-        router.push("/q&a/qrcode");
+        router.push("/q&a/admin-dashboard?name=" + encodeURIComponent(name));
     };
 
     return (
-        <main className="flex justify-center items-center min-h-screen gap-10 flex-col bg-gray-900">
+        <main className="flex justify-center items-center min-h-screen gap-10 flex-col bg-gray-900 relative">
+            {/* Back Button outside the container */}
+            <button
+                className="absolute top-8 left-8 bg-gray-700 text-white px-4 py-2 rounded shadow hover:bg-gray-600 z-10"
+                onClick={() => router.push('/')}
+            >
+                ← Back
+            </button>
             <div className="max-w-md mx-auto mt-8 p-6 border border-gray-700 rounded-lg shadow bg-gray-800">
                 <h2 className="text-2xl font-semibold mb-6 text-white">Create Q&amp;A Event</h2>
                 <form onSubmit={handleSubmit}>
@@ -37,10 +44,6 @@ export default function NewEventPage() {
                     </button>
                 </form>
             </div>
-
-
-
-
         </main>
     );
 }
