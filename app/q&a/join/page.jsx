@@ -1,8 +1,10 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { createClient } from '@/utils/supabase/server';
+import { redirect } from 'next/navigation';
 
-export default function JoinPage() {
+export default async function JoinPage() {
     const [code, setCode] = useState('');
     const [error, setError] = useState('');
     const router = useRouter();
@@ -21,6 +23,14 @@ export default function JoinPage() {
         }
         router.push('/q&a');
     };
+
+  const supabase = createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect("/login");
+  }
+    
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-900">

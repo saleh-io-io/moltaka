@@ -22,6 +22,7 @@ const qrData = [
 const fakeDigits = '482195736';
 
 export default function QRCodePage() {
+    
     return (
         <main className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-gray-50">
             <div className="bg-gray-800 p-8 rounded-2xl shadow-2xl flex flex-col items-center">
