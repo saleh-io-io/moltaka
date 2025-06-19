@@ -14,6 +14,7 @@ export default function Page() {
       alert('Sorry, your browser does not support speech recognition.');
       return;
     }
+    
     if (!recording) {
       const recognition = new window.webkitSpeechRecognition();
       recognition.lang = 'en-US';

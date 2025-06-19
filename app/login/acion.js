@@ -24,6 +24,9 @@ export async function login(formData) {
   revalidatePath('/', 'layout')
   redirect('/')
 }
+
+
+
 export async function loginWithGithub() {
   const supabase = await createClient()
 
@@ -61,6 +64,21 @@ export async function signup(formData) {
   revalidatePath('/', 'layout')
   redirect('/')
 }
+
+//function to check if the user is logged in
+export async function isLoggedIn() {
+  const supabase = await createClient()
+
+  const { data: { user }, error } = await supabase.auth.getUser()
+
+  if (error) {
+    console.error('Error fetching user:', error)
+    return false
+  }
+
+  return !!user
+}
+
 
 export async function logout() {
   const supabase = await createClient()

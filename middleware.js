@@ -1,8 +1,19 @@
 import { updateSession } from '@/utils/supabase/middleware'
 
+const allowList = [
+  /^\/q&a(\/.*)?$/, // Allow /q&a and all subpaths
+];
+
 export async function middleware(request) {
-  // update user's auth session
-  return await updateSession(request)
+  const { pathname } = request.nextUrl;
+
+  // If the path matches the allowList, skip auth/session update
+  if (allowList.some((regex) => regex.test(pathname))) {
+    return; // Allow through without auth/session
+  }
+
+  // update user's auth session for all other paths
+  return await updateSession(request);
 }
 
 export const config = {

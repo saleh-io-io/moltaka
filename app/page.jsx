@@ -9,6 +9,7 @@ export default async function Home() {
 
   const { data: { user } } = await supabase.auth.getUser();
   console.log('user', user);
+  
   if (user) {
     return (
       <main className="flex justify-center items-center min-h-screen gap-10 flex-col bg-gray-900">
@@ -43,6 +44,12 @@ export default async function Home() {
           <Link href="/login" className="text-blue-400 hover:underline text-2xl">
             Login
           </Link>
+          <h2>
+            <Link href="/q&a/join" className="text-green-400 hover:underline text-xl">
+              Join Event Q&amp;A
+            </Link>
+          </h2>
+ 
 
         </div>
       </main>
