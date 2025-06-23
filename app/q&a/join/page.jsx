@@ -5,6 +5,7 @@ import { createClient } from '@/utils/supabase/client';
 
 export default function JoinPage() {
     const [code, setCode] = useState('');
+    const [username, setUsername] = useState('');
     const [error, setError] = useState('');
     const router = useRouter();
 
@@ -29,6 +30,13 @@ export default function JoinPage() {
             <div className="w-full max-w-md bg-gray-800 rounded-lg shadow-md p-8">
                 <h2 className="text-2xl font-bold mb-6 text-gray-900 text-center">Enter 9-Digit Code</h2>
                 <form onSubmit={handleSubmit}>
+                    <input type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        placeholder="Enter your name"
+                        className="w-full px-4 py-3 text-lg border border-gray-300 rounded mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required 
+                    />
                     <input
                         type="text"
                         value={code}

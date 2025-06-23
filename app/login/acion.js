@@ -25,6 +25,18 @@ export async function login(formData) {
   redirect('/')
 }
 
+//login as annonymous user
+export async function loginAsAnonymous(username) {
+  if (!username) {
+    console.error('Username is required for anonymous login')
+    redirect('/error')
+  }
+
+
+  const supabase = await createClient()
+  const { error } = await supabase.auth.signInAnonymously({
+  })
+}
 
 
 export async function loginWithGithub() {
