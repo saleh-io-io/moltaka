@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { createClient } from '@/utils/supabase/client';
+import { login, loginAsAnonymous } from '@/app/login/acion';
 
 export default function JoinPage() {
     const [code, setCode] = useState('');
@@ -22,6 +22,13 @@ export default function JoinPage() {
             setError('Please enter a 9-digit code.');
             return;
         }
+        if(!username.trim()) {
+            setError('Please enter your name.');
+            return;
+        }
+        loginAsAnonymous(username)
+            
+
         router.push('/q&a');
     };   
 

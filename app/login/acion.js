@@ -34,8 +34,23 @@ export async function loginAsAnonymous(username) {
 
 
   const supabase = await createClient()
-  const { error } = await supabase.auth.signInAnonymously({
+  const { error,data } = await supabase.auth.signInAnonymously({
   })
+  supabase.auth.updateUser({
+    data: {
+      full_name: username
+    }
+  })
+ console.log('data', data) 
+
+
+  if (error) {
+    console.error('Anonymous login error:', error)
+    redirect('/error')
+  }
+
+  revalidatePath('/', 'layout')
+  redirect('/')
 }
 
 
