@@ -32,26 +32,48 @@ export async function loginAsAnonymous(username) {
     redirect('/error')
   }
 
-
   const supabase = await createClient()
-  const { error,data } = await supabase.auth.signInAnonymously({
-  })
-  supabase.auth.updateUser({
-    data: {
-      full_name: username
-    }
-  })
- console.log('data', data) 
 
+  // Sign in anonymously
+  const { error: signInError } = await supabase.auth.signInAnonymously()
 
-  if (error) {
-    console.error('Anonymous login error:', error)
+  if (signInError) {
+    console.error('Anonymous login error:', signInError)
     redirect('/error')
   }
 
-  revalidatePath('/', 'layout')
-  redirect('/')
+  // Get the current user
+  const { data: userData, error: userError } = await supabase.auth.getUser()
+
+  if (userError || !userData?.user?.id) {
+    console.error('Failed to get user after login:', userError)
+    redirect('/error')
+  }
+
+  const userId = userData.user.id
+
+  // Update user metadata
+  await supabase.auth.updateUser({
+    data: {
+      full_name: username,
+    }
+  })
+
+  // Update your users table
+ const {error} =  await supabase.from('attendees').update({
+    name: username,
+  }).eq('uuid', userId)
+
+  if (error) {
+    console.error('Error updating user in database:', error)
+    redirect('/error')
+  }
+
+  console.log('User ID:', userId)
+
+  redirect('/join')
 }
+
 
 
 export async function loginWithGithub() {
@@ -91,6 +113,20 @@ export async function signup(formData) {
   revalidatePath('/', 'layout')
   redirect('/')
 }
+export async function loginWithEmailAndPassword(email, password) {
+  const supabase = await createClient()
+  
+  const { error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  })
+  if (error) {
+    console.error('Login error:', error)
+    redirect('/error')
+  }
+  
+ redirect('/')
+}
 
 //function to check if the user is logged in
 export async function isLoggedIn() {
@@ -105,6 +141,7 @@ export async function isLoggedIn() {
 
   return !!user
 }
+
 
 
 export async function logout() {

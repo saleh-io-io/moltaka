@@ -40,7 +40,6 @@ export default async function Home() {
       <main className="flex justify-center items-center min-h-screen bg-gray-900">
         <div className="bg-gray-800 p-10 rounded-lg shadow-lg flex flex-col items-center gap-6">
           <h1 className="text-4xl font-bold text-white mb-2">Moltaka</h1>
-          <h2 className="text-white text-xl">Please login to continue</h2>
           <Link href="/login" className="text-blue-400 hover:underline text-2xl">
             Login
           </Link>
