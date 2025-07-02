@@ -1,6 +1,6 @@
 'use server'
 
-import{redirct}from 'next/navigation'
+import{redirect}from 'next/navigation'
 import { createClient } from '@/utils/supabase/server'
 
 export async function createEvent(formData) {
@@ -11,24 +11,35 @@ export async function createEvent(formData) {
     redirect('/login');
   }
 
-  const eventData = {
-    title: formData.get('title'),
-    description: formData.get('description'),
-    date: formData.get('date'),
-    time: formData.get('time'),
-    user_id: user.data.user.id,
+  //generate a unique random code for the event from 5 characters
+  const generateRandomCode = () => {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let result = '';
+    for (let i = 0; i < 5; i++) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
   };
+
+  const eventData = {
+    code : generateRandomCode(),
+    name: formData.get('qna-name'),
+    admin_id: user.data.user.id,
+  };
+  console.log(eventData)
+
 
   const { data, error } = await supabase
     .from('events')
-    .insert([eventData]);
+    .insert([eventData]).select();
+    
 
   if (error) {
     console.error('Error creating event:', error);
     redirect('/error');
   }
 
-  redirect(`/q&a/${data[0].id}`);
+  redirect("/q&a/event/dashboard");
 }
 
 export async function joinEvent(formData) {

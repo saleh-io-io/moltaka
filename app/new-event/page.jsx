@@ -3,6 +3,7 @@ import { use, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from '@/utils/supabase/client';
+import { createEvent } from "@/db/event";
 
 export default function NewEventPage() {
     // Check if the user is logged in
@@ -13,7 +14,9 @@ export default function NewEventPage() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        createEvent
         // You can handle the name value here if needed
+
         router.push("/q&a/event/dashboard");
     };
 
@@ -54,12 +57,13 @@ export default function NewEventPage() {
         <main className="flex justify-center items-center min-h-screen gap-10 flex-col bg-gray-900">
             <div className="max-w-md mx-auto mt-8 p-6 border border-gray-700 rounded-lg shadow bg-gray-800">
                 <h2 className="text-2xl font-semibold mb-6 text-white">Create Q&amp;A Event</h2>
-                <form onSubmit={handleSubmit}>
+                <form >
                     <label htmlFor="qna-name" className="block mb-2 font-medium text-gray-200">
                         Q&amp;A Name:
                     </label>
                     <input
                         id="qna-name"
+                        name="qna-name"
                         type="text"
                         value={name}
                         onChange={e => setName(e.target.value)}
@@ -67,6 +71,7 @@ export default function NewEventPage() {
                         className="w-full px-3 py-2 mb-4 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     <button
+                    formAction={createEvent}
                         type="submit"
                         className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition"
                     >
