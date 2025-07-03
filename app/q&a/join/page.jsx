@@ -17,19 +17,20 @@ export default function JoinPage() {
     };
 
     const handleSubmit = (e) => {
-        e.preventDefault();
+        
+        e.preventDefault(); 
+
         if (code.length !== 9) {
-            setError('Please enter a 9-digit code.');
+            setError('Please enter a valid 9-digit code.');
             return;
         }
-        if(!username.trim()) {
+        if (!username.trim()) {
             setError('Please enter your name.');
             return;
         }
         loginAsAnonymous(username)
-            
-
         router.push('/q&a');
+
     };   
 
     return (

@@ -5,35 +5,35 @@ import '../globals.css';
 export default function Page() {
   const [question, setQuestion] = useState('');
   const [submitted, setSubmitted] = useState(false);
-  const [recording, setRecording] = useState(false);
-  const recognitionRef = useRef(null);
+  // const [recording, setRecording] = useState(false);
+  // const recognitionRef = useRef(null);
 
   // Voice recording logic
-  const handleVoiceInput = () => {
-    if (!('webkitSpeechRecognition' in window)) {
-      alert('Sorry, your browser does not support speech recognition.');
-      return;
-    }
+  // const handleVoiceInput = () => {
+  //   if (!('webkitSpeechRecognition' in window)) {
+  //     alert('Sorry, your browser does not support speech recognition.');
+  //     return;
+  //   }
     
-    if (!recording) {
-      const recognition = new window.webkitSpeechRecognition();
-      recognition.lang = 'en-US';
-      recognition.interimResults = false;
-      recognition.maxAlternatives = 1;
-      recognition.onresult = (event) => {
-        setQuestion(event.results[0][0].transcript);
-        setRecording(false);
-      };
-      recognition.onend = () => setRecording(false);
-      recognition.onerror = () => setRecording(false);
-      recognition.start();
-      recognitionRef.current = recognition;
-      setRecording(true);
-    } else {
-      recognitionRef.current && recognitionRef.current.stop();
-      setRecording(false);
-    }
-  };
+  //   if (!recording) {
+  //     const recognition = new window.webkitSpeechRecognition();
+  //     recognition.lang = 'en-US';
+  //     recognition.interimResults = false;
+  //     recognition.maxAlternatives = 1;
+  //     recognition.onresult = (event) => {
+  //       setQuestion(event.results[0][0].transcript);
+  //       setRecording(false);
+  //     };
+  //     recognition.onend = () => setRecording(false);
+  //     recognition.onerror = () => setRecording(false);
+  //     recognition.start();
+  //     recognitionRef.current = recognition;
+  //     setRecording(true);
+  //   } else {
+  //     recognitionRef.current && recognitionRef.current.stop();
+  //     setRecording(false);
+  //   }
+  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -61,14 +61,15 @@ export default function Page() {
               value={question}
               onChange={e => setQuestion(e.target.value)}
             />
-            <button
+
+            {/* <button
               type="button"
               className={`bg-gray-700 text-white p-2 rounded ${recording ? 'bg-red-500' : ''}`}
               onClick={handleVoiceInput}
               disabled={recording}
             >
               {recording ? 'Recording...' : '🎤 Record Voice'}
-            </button>
+            </button> */}
             <button type="submit" className="mt-2 bg-blue-500 text-white p-2 self-end rounded">
               Submit
             </button>

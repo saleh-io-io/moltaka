@@ -50,13 +50,14 @@ export async function joinEvent(formData) {
     redirect('/login');
   }
 
-  const eventId = formData.get('eventId');
+  const eventName = formData.get('name');
+  const eventCode = formData.get('code');
 
   // Check if the event exists
   const { data: event, error: eventError } = await supabase
     .from('events')
     .select('*')
-    .eq('id', eventId)
+    .eq('name', eventName).eq('code', eventCode)
     .single();
 
   if (eventError || !event) {
@@ -64,7 +65,11 @@ export async function joinEvent(formData) {
     redirect('/error');
   }
 
-  // Join the event logic can be added here
 
-  redirect(`/q&a/${eventId}`);
+  // Join the event logic can be added here
+  const { data: joinData, error: joinError } = await supabase
+    .from('')
+    .insert([{ event_id: event.id, user_id: user.data.user.id }]);
+
+  redirect(`/q&a/${eventName}`);
 }

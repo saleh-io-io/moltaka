@@ -27,8 +27,9 @@ export async function login(formData) {
 
 //login as annonymous user
 export async function loginAsAnonymous(username) {
+  console.log('Logging in as anonymous user with username:', username)
   if (!username) {
-    console.error('Username is required for anonymous login')
+    console.log('Username is required for anonymous login')
     redirect('/error')
   }
 
@@ -38,7 +39,7 @@ export async function loginAsAnonymous(username) {
   const { error: signInError } = await supabase.auth.signInAnonymously()
 
   if (signInError) {
-    console.error('Anonymous login error:', signInError)
+  console.log('Anonymous login error:', signInError)
     redirect('/error')
   }
 
@@ -46,7 +47,7 @@ export async function loginAsAnonymous(username) {
   const { data: userData, error: userError } = await supabase.auth.getUser()
 
   if (userError || !userData?.user?.id) {
-    console.error('Failed to get user after login:', userError)
+    console.log('Failed to get user after login:', userError)
     redirect('/error')
   }
 
@@ -65,13 +66,13 @@ export async function loginAsAnonymous(username) {
   }).eq('uuid', userId)
 
   if (error) {
-    console.error('Error updating user in database:', error)
+    console.log('Error updating user in database:', error)
     redirect('/error')
   }
 
   console.log('User ID:', userId)
+  return userId
 
-  redirect('/join')
 }
 
 
@@ -105,8 +106,8 @@ export async function signup(formData) {
   const { error } = await supabase.auth.signUp(data)
 
   if (error) {
-    console.error('Signup error:', error)
-    console.error('error',)
+    console.log('Signup error:', error)
+    console.log('error',)
     redirect('/error')
   }
 
@@ -121,7 +122,7 @@ export async function loginWithEmailAndPassword(email, password) {
     password,
   })
   if (error) {
-    console.error('Login error:', error)
+    console.log('Login error:', error)
     redirect('/error')
   }
   
@@ -135,7 +136,7 @@ export async function isLoggedIn() {
   const { data: { user }, error } = await supabase.auth.getUser()
 
   if (error) {
-    console.error('Error fetching user:', error)
+    console.log('Error fetching user:', error)
     return false
   }
 
@@ -150,7 +151,7 @@ export async function logout() {
   const { error } = await supabase.auth.signOut()
 
   if (error) {
-    console.error('Logout error:', error)
+    console.log('Logout error:', error)
     redirect('/error')
   }
 
