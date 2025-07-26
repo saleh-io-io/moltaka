@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
-import { logout } from "./login/acion";
+import { logout } from "./login/acion-server";
 
 
 export default async function Home() {

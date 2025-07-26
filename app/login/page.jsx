@@ -1,5 +1,5 @@
 import '../globals.css';
-import { login, signup, loginWithGithub } from './acion';
+import { login, signup, loginWithGithub } from './acion-server';
 
 
 export default function SignInPage() {
